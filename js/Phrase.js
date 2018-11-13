@@ -50,8 +50,8 @@ class Phrase{
         const phraseUL = $('#phrase ul')
         for (let i = 0; i < phrase.length; i++) {
             if (phrase[i].toLowerCase() === letter.toLowerCase()) {
-                $(phraseUL).children().eq(i).removeClass('hide letter');
-                $(phraseUL).children().eq(i).addClass('show letter');
+                $(phraseUL).children().eq(i).removeClass('hide');
+                $(phraseUL).children().eq(i).addClass('show');
             }
         }
     }
