@@ -1,26 +1,58 @@
-const startDiv = $('#overlay');
-$('#btn__reset').on('click', e =>{
-    startDiv.hide();
+// Initializng the game
+let game = new Game();
+
+
+// This function resets the game
+function resetDisplay(){
+    // hide starting screen overlay
+    const startDiv = $('#overlay');
+    $('#btn__reset').on('click', e =>{
+        startDiv.hide();
+    })
+
+    // reset onscreen keyboard classes
+    $('.key').removeClass('wrong');
+    $('.key').removeClass('chosen');
+
+    // retrieve life hearts
+    const hearts = '<li class="tries"><img src="images/liveHeart.png" height="35px" widght="30px"></li>'
+    const heartsNum = $('#scoreboard ol').children().length;
+    for (let i = 0; i < 5-heartsNum; i++) {
+        $('#scoreboard ol').append(hearts);
+    }
+
+    // reset phrase display
+    $('#phrase ul').remove();
+    const ul = '<ul></ul>'
+    $('#phrase').append(ul);
+}
+
+
+// a function that handles interactions inside the game object
+// * Disables the button on the onScreen
+function markButton(event){
+    // Mark each clicked letter as chosen
+    if(event.target.className.indexOf('keyrow') === -1 &&
+       event.target.className.indexOf('section') === -1){
+        event.target.classList.add('chosen');
+    }
+
+    // Handle interactions with the hidden phrase
+    game.handleInteraction(event);
+}
+
+
+// A listener to letter clicks that calls mark button function
+$('#qwerty').on('click', e => {
+    markButton(e);
 })
 
 
+// a function that resets the game, initialize a new one and start it
+$('#btn__reset').on('click', e => {
+    resetDisplay();
+    game = new Game();
+})
 
-/*
-const game = new Game();
-game.getRandomPhrase();
-game.handleInteraction();
-*/
 
-/*
-// Checking results of Phrase class
-// const phrase = new Phrase('hello sary are you here');
-// phrase.addPhraseToDisplay('hello sary are you here');
-// console.log(phrase.checkLetter('y', 'hello sary are you here'));
-// console.log(phrase.checkLetter('z', 'hello sary are you here'));
-// phrase.showMatchedLetter('y', 'Sary are you here');
-*/
-
-const game = new Game();
-game.startGame();
-game.handleInteraction();
-
+resetDisplay();

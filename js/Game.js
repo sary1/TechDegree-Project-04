@@ -1,12 +1,17 @@
 class Game{
     constructor(){
         this.missed = 0;
-        this.phrases = ['hello sary are you here',
-                        'My name is Sary',
-                        'Do you know my name',
-                        'This app is amazing',
-                        'OOP is not that difficult after all'];
-        this.phrase = this.getRandomPhrase;
+        this.phrases = ['Marvel Avengers Infinity War',
+                        'Universal Jurassic World Fallen Kingdom',
+                        'Marvel Black Panther',
+                        'Paramount Mission Impossible Fallout',
+                        'Disney AntMan and the Wasp',
+                        'Warner Bros Ready Player One',
+                        'Wanda Media Operation Red Sea',
+                        'Disney Star Wars The Force Awakens',
+                        'Lionsgate The Hunger Games Mockingjay',
+                        'Pixar Inside Out'];
+        this.phrase = this.startGame;
     }
 
 
@@ -24,22 +29,25 @@ class Game{
      * Checks to see if the button clicked by the player matches a letter in the
      * phrase.
      */
-    handleInteraction(){
+    handleInteraction(event){
         const hiddenObject  = this.phrase;
         const hiddenPhrase  = hiddenObject.phrase;
-        $('#qwerty').on('click', e => {
-            if(e.target.className === 'key'){
-                const clickedLetter = e.target.textContent;
-                if(hiddenObject.checkLetter(clickedLetter, hiddenPhrase)){
-                    hiddenObject.showMatchedLetter(clickedLetter, hiddenPhrase);
-                    if (this.checkForWin()) {
-                        this.gameOver();
-                    }
-                } else {
-                    this.removeLife();
+        // make sure the players doesn't remove a life when clicking
+        // in an empty space
+        if(event.target.className.indexOf('key') != -1 &&
+           event.target.className.indexOf('keyrow') === -1){
+            const clickedLetter = event.target.textContent;
+            if(hiddenObject.checkLetter(clickedLetter, hiddenPhrase)){
+                hiddenObject.showMatchedLetter(clickedLetter, hiddenPhrase);
+                if (this.checkForWin()) {
+                    this.gameOver();
                 }
+            } else {
+                // Change the color of wrong letters
+                event.target.classList.add('wrong');
+                this.removeLife();
             }
-        })
+        }
     }
 
 
@@ -91,10 +99,10 @@ class Game{
     /*
      * Uses the randomly picked phrase to display it on the board
      */
-    startGame(){
-        const phraseObj = this.phrase;
+    get startGame(){
+        const phraseObj = this.getRandomPhrase;
         const phrase = phraseObj.phrase;
         phraseObj.addPhraseToDisplay(phrase);
-        return phraseObj;
+        return phraseObj
     }
 }
