@@ -1,16 +1,16 @@
 class Game{
     constructor(){
         this.missed = 0;
-        this.phrases = ['Marvel Avengers Infinity War',
-                        'Universal Jurassic World Fallen Kingdom',
-                        'Marvel Black Panther',
-                        'Paramount Mission Impossible Fallout',
-                        'Disney AntMan and the Wasp',
-                        'Warner Bros Ready Player One',
-                        'Wanda Media Operation Red Sea',
-                        'Disney Star Wars The Force Awakens',
-                        'Lionsgate The Hunger Games Mockingjay',
-                        'Pixar Inside Out'];
+        this.phrases = ['Avengers Infinity War',
+                        'Jurassic World Fallen Kingdom',
+                        'Black Panther',
+                        'Mission Impossible Fallout',
+                        'AntMan and the Wasp',
+                        'Bros Ready Player One',
+                        'Operation Red Sea',
+                        'Star Wars The Force Awakens',
+                        'The Hunger Games Mockingjay',
+                        'Inside Out'];
         this.phrase = this.startGame;
     }
 
@@ -88,9 +88,11 @@ class Game{
     gameOver(){
         const gameOverHeader = $('#game-over-message');
         if (this.checkForWin()) {
-            $(gameOverHeader).text('Congratulations you won the Game Yaay ;)');
+            $(gameOverHeader).text('Congratulations you won the Game Yaay');
+            $('#btn__reset').text('Play Again');
         } else {
             $(gameOverHeader).text('Sorry you lost, Try one more time');
+            $('#btn__reset').text('Play Again');
         }
         $('#overlay').show();
     }

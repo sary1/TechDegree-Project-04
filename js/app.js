@@ -44,6 +44,7 @@ function markButton(event){
 
 // A listener to letter clicks that calls mark button function
 $('#qwerty').on('click', e => {
+    console.log(e.target.textContent);
     markButton(e);
 })
 
@@ -56,3 +57,13 @@ $('#btn__reset').on('click', e => {
 
 
 resetDisplay();
+
+
+// Simulating a mouse click on the onscreen keyboard when using the
+// keyboard
+$(document).on('keypress', e => {
+    const letter = e.key;
+    const button = $(`button:contains(${letter}):last`)
+    const clickedBtn = button[0];
+    $(clickedBtn).trigger('click');
+})
